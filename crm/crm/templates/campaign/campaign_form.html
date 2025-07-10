@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="card p-4">
+
+    <h2 class="section-title">{{ title }}</h2>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <div class="mb-3">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.start_date.label_tag }}
+        {{ form.start_date }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.end_date.label_tag }}
+        {{ form.end_date }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.leads.label_tag }}
+        {{ form.leads }}
+      </div>
+
+      <!-- 🎯 Display selected leads as badges -->
+      <div id="selected-leads" class="mb-3"></div>
+
+      <!-- Buttons -->
+      <div class="mt-4 d-flex gap-2">
+        <button type="submit" class="btn btn-rounded">Save</button>
+        <a href="{% url 'campaign_list' %}" class="btn btn-rounded">Back</a>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<!-- 📦 Select2 CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    const $select = $('.select2');
+
+    function updateSelectedBadges() {
+      const selectedOptions = $select.select2('data');
+      const container = $('#selected-leads');
+      container.empty();
+
+      selectedOptions.forEach(item => {
+        const badge = `
+          <span class="badge bg-primary me-1 mb-1">
+            ${item.text}
+            <span class="ms-1" style="cursor:pointer;" onclick="removeLead('${item.id}')">&times;</span>
+          </span>`;
+        container.append(badge);
+      });
+    }
+
+    window.removeLead = function (id) {
+      const currentValues = $select.val() || [];
+      const newValues = currentValues.filter(v => v != id);
+      $select.val(newValues).trigger('change');
+    };
+
+    $select.select2({ placeholder: 'Select leads...', width: '100%' });
+    updateSelectedBadges();
+    $select.on('change', updateSelectedBadges);
+  });
+</script>
+{% endblock %}

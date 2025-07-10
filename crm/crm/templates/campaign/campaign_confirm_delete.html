@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid">
+  <div class="card p-4">
+    <h2 class="section-title">Delete Campaign</h2>
+    <p>Are you sure you want to delete <strong>{{ campaign.name }}</strong>?</p>
+
+    <form method="post" class="mt-4 d-flex gap-2">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger rounded-pill px-4">Yes, Delete</button>
+      <a href="{% url 'campaign_list' %}" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="card p-4">
+    <h2 class="section-title">{{ title }}</h2>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <div class="mb-3">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.trigger_type.label_tag }}
+        {{ form.trigger_type }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.trigger_value.label_tag }}
+        {{ form.trigger_value }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.action.label_tag }}
+        {{ form.action }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.target_campaign.label_tag }}
+        {{ form.target_campaign }}
+      </div>
+
+      <div class="mt-4 d-flex gap-2">
+        <button type="submit" class="btn btn-rounded">Create Automation</button>
+        <a href="{% url 'automation_list' %}" class="btn btn-rounded">Back</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

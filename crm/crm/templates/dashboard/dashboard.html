@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+  body {
+    background-color: #F5F7FA;
+    font-family: 'Poppins', sans-serif;
+  }
+  .card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background-color: #ffffff;
+  }
+  .card-header {
+    background-color: #E6EAF0;
+    color: #202124;
+    font-weight: 600;
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+  }
+  .section-title {
+    color: #202124;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .stat-label {
+    color: #5F6368;
+    font-size: 0.85rem;
+  }
+  .stat-value {
+    color: #202124;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+</style>
+
+<div class="container-fluid">
+  <h2 class="section-title">Dashboard</h2>
+
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card p-3">
+        <div class="stat-label">Total Leads</div>
+        <div class="stat-value">{{ total_leads }}</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3">
+        <div class="stat-label">Total Campaigns</div>
+        <div class="stat-value">{{ total_campaigns }}</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3">
+        <div class="stat-label">Active Automations</div>
+        <div class="stat-value">{{ total_automations }}</div>
+      </div>
+    </div>
+  </div>
+  
+<!-- Charts Row -->
+<div class="row mb-4">
+  <div class="col-md-6">
+    <div class="card" style="height: 100%;">
+      <div class="card-header" style="background-color: #E6EAF0; color: #202124; font-weight: 500;">
+        Lead Status Distribution
+      </div>
+      <div class="card-body d-flex align-items-center justify-content-center" style="padding: 1rem;">
+        <canvas id="leadStatusChart" style="max-height: 220px; max-width: 100%;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card" style="height: 100%;">
+      <div class="card-header" style="background-color: #E6EAF0; color: #202124; font-weight: 500;">
+        Lead Growth Over Time
+      </div>
+      <div class="card-body">
+        <canvas id="leadGrowthChart" style="max-height: 220px; width: 100%;"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">Recent Leads</div>
+        <div class="card-body">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr><th>Name</th><th>Email</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              {% for lead in recent_leads %}
+              <tr><td>{{ lead.name }}</td><td>{{ lead.email }}</td><td>{{ lead.status }}</td></tr>
+              {% empty %}<tr><td colspan="3">No recent leads.</td></tr>{% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">Recent Campaigns</div>
+        <div class="card-body">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr><th>Name</th><th>Start</th><th>End</th></tr>
+            </thead>
+            <tbody>
+              {% for campaign in recent_campaigns %}
+              <tr><td>{{ campaign.name }}</td><td>{{ campaign.start_date }}</td><td>{{ campaign.end_date }}</td></tr>
+              {% empty %}<tr><td colspan="3">No recent campaigns.</td></tr>{% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const statusChart = new Chart(document.getElementById('leadStatusChart'), {
+  type: 'pie',
+  data: {
+    labels: [{% for s in leads_by_status %}'{{ s.status }}',{% endfor %}],
+    datasets: [{
+      data: [{% for s in leads_by_status %}{{ s.count }},{% endfor %}],
+      backgroundColor: ['#2B7CD3', '#90CAF9', '#64B5F6', '#2196F3', '#1565C0'],
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'bottom',
+        labels: {
+          font: {
+            size: 12,
+            family: "'Poppins', sans-serif"
+          }
+        }
+      },
+      title: {
+        display: false
+      }
+    }
+  }
+});
+
+const growthChart = new Chart(document.getElementById('leadGrowthChart'), {
+  type: 'line',
+  data: {
+    labels: {{ growth_labels|safe }},
+    datasets: [{
+      label: 'Leads Created',
+      data: {{ growth_counts|safe }},
+      fill: true,
+      borderColor: '#2B7CD3',
+      backgroundColor: 'rgba(43, 124, 211, 0.1)',
+      tension: 0.4
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      title: { display: false }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          font: { family: "'Poppins', sans-serif", size: 12 }
+        }
+      },
+      x: {
+        ticks: {
+          font: { family: "'Poppins', sans-serif", size: 12 }
+        }
+      }
+    }
+  }
+});
+
+</script>
+{% endblock %}

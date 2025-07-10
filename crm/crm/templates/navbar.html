@@ -1,0 +1,64 @@
+{% load static %}
+<style>
+  .navbar-custom {
+    background-color: #03045E;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .navbar-custom .nav-link,
+  .navbar-custom .navbar-brand {
+    color: white !important;
+  }
+
+  .navbar-custom .nav-link:hover,
+  .navbar-custom .nav-link:focus {
+    color: #90E0EF !important;
+  }
+
+  .navbar-custom .btn-link.nav-link {
+    color: white !important;
+    text-decoration: none;
+  }
+
+  .navbar-custom .btn-link.nav-link:hover {
+    color: #90E0EF !important;
+  }
+
+  .navbar-toggler-icon {
+    filter: invert(1);
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-semibold" href="{% url 'dashboard' %}">Smart CRM</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'profile' %}">Hello, {{ user.username }}</a>
+          </li>
+          <li class="nav-item">
+            <form method="POST" action="{% url 'logout' %}" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-link nav-link">Logout</button>
+            </form>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
