@@ -4,37 +4,58 @@
 <style>
   body {
     background-color: #F5F7FA;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
   }
+
   .card {
-    border: none;
+    border: 1px solid #E9E5FE;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 6px rgba(82, 40, 245, 0.08);
     background-color: #ffffff;
   }
+
   .card-header {
-    background-color: #E6EAF0;
-    color: #202124;
+    background-color:rgb(240, 240, 240);
+    color: #202124; /* Keep titles readable */
     font-weight: 600;
     border-bottom: none;
     border-radius: 10px 10px 0 0;
   }
+
   .section-title {
-    color: #202124;
+    color: #202124; /* Keep heading as it is */
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 1rem;
   }
+
   .stat-label {
     color: #5F6368;
     font-size: 0.85rem;
   }
+
   .stat-value {
-    color: #202124;
+    color: #5228F5;
     font-size: 1.2rem;
     font-weight: 600;
   }
+
+  .table th {
+    color: #5228F5;
+    font-weight: 600;
+  }
+
+  .table td {
+    color: #202124;
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: #F0EDFF;
+  }
 </style>
+
+
 
 <div class="container-fluid">
   <h2 class="section-title">Dashboard</h2>
@@ -64,7 +85,7 @@
 <div class="row mb-4">
   <div class="col-md-6">
     <div class="card" style="height: 100%;">
-      <div class="card-header" style="background-color: #E6EAF0; color: #202124; font-weight: 500;">
+      <div class="card-header">
         Lead Status Distribution
       </div>
       <div class="card-body d-flex align-items-center justify-content-center" style="padding: 1rem;">
@@ -75,7 +96,7 @@
 
   <div class="col-md-6">
     <div class="card" style="height: 100%;">
-      <div class="card-header" style="background-color: #E6EAF0; color: #202124; font-weight: 500;">
+      <div class="card-header">
         Lead Growth Over Time
       </div>
       <div class="card-body">
@@ -91,7 +112,7 @@
       <div class="card">
         <div class="card-header">Recent Leads</div>
         <div class="card-body">
-          <table class="table table-sm table-hover">
+          <table class="table table-sm table-hover" style="font-family: 'Inter', sans-serif;">
             <thead>
               <tr><th>Name</th><th>Email</th><th>Status</th></tr>
             </thead>
@@ -109,7 +130,7 @@
       <div class="card">
         <div class="card-header">Recent Campaigns</div>
         <div class="card-body">
-          <table class="table table-sm table-hover">
+          <table class="table table-sm table-hover" style="font-family: 'Inter', sans-serif;">
             <thead>
               <tr><th>Name</th><th>Start</th><th>End</th></tr>
             </thead>
@@ -134,7 +155,7 @@ const statusChart = new Chart(document.getElementById('leadStatusChart'), {
     labels: [{% for s in leads_by_status %}'{{ s.status }}',{% endfor %}],
     datasets: [{
       data: [{% for s in leads_by_status %}{{ s.count }},{% endfor %}],
-      backgroundColor: ['#2B7CD3', '#90CAF9', '#64B5F6', '#2196F3', '#1565C0'],
+backgroundColor: ['#5228F5', '#7A52FA', '#A086FC', '#D0C7FD', '#E9E5FE']
     }]
   },
   options: {
@@ -147,13 +168,11 @@ const statusChart = new Chart(document.getElementById('leadStatusChart'), {
         labels: {
           font: {
             size: 12,
-            family: "'Poppins', sans-serif"
+            family: "'Inter', sans-serif"
           }
         }
       },
-      title: {
-        display: false
-      }
+      title: { display: false }
     }
   }
 });
@@ -166,8 +185,10 @@ const growthChart = new Chart(document.getElementById('leadGrowthChart'), {
       label: 'Leads Created',
       data: {{ growth_counts|safe }},
       fill: true,
-      borderColor: '#2B7CD3',
-      backgroundColor: 'rgba(43, 124, 211, 0.1)',
+borderColor: '#5228F5',
+backgroundColor: 'rgba(82, 40, 245, 0.1)',
+
+
       tension: 0.4
     }]
   },
@@ -182,17 +203,16 @@ const growthChart = new Chart(document.getElementById('leadGrowthChart'), {
       y: {
         beginAtZero: true,
         ticks: {
-          font: { family: "'Poppins', sans-serif", size: 12 }
+          font: { family: "'Inter', sans-serif", size: 12 }
         }
       },
       x: {
         ticks: {
-          font: { family: "'Poppins', sans-serif", size: 12 }
+          font: { family: "'Inter', sans-serif", size: 12 }
         }
       }
     }
   }
 });
-
 </script>
 {% endblock %}

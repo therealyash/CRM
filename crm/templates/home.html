@@ -1,0 +1,206 @@
+{% extends 'base_public.html' %}
+{% load static %}
+
+{% block title %}Welcome to Smart CRM{% endblock %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+    color: #202124;
+  }
+
+  .section {
+    padding: 80px 0;
+  }
+
+  .section-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #5f6368;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 40px;
+  }
+
+  .btn-get-started {
+    border-radius: 999px;
+    background-color: #5228F5;
+    color: #fff;
+    padding: 12px 32px;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    transition: background 0.3s;
+  }
+
+  .btn-get-started:hover {
+    background-color:rgb(0, 0, 0);
+    color:white;
+  }
+
+  .hero-image {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 5px 60px rgba(0, 0, 0, 0.1);
+    max-height: 420px;
+    object-fit: contain;
+  }
+
+  .stat-box {
+    background-color: #f8f9fa;
+    padding: 40px 30px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .stat-box h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #5228F5;
+  }
+
+  .stat-box p {
+    font-weight: 500;
+    color: #5f6368;
+  }
+
+  .icon-box {
+    text-align: center;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s;
+  }
+
+  .icon-box:hover {
+    background-color: #f4f4f4;
+  }
+
+  .icon-box i {
+    font-size: 2rem;
+    color: #5228F5;
+    margin-bottom: 15px;
+  }
+
+  @media (max-width: 768px) {
+    .section-title {
+      font-size: 1.8rem;
+    }
+
+    .hero-image {
+      margin-top: 40px;
+    }
+  }
+</style>
+
+<!-- Hero Section -->
+<div class="container section">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <h5 style="color: #5228F5; font-weight: 600;">Content Management</h5>
+      <h1 style="font-size: 3.2rem; font-weight: 800;">Manage all your platforms in just one place.</h1>
+      <p style="font-size: 1.1rem; color: #5f6368;">Streamline your marketing & manage leads efficiently.</p>
+      <a href="{% url 'login' %}" class="btn btn-get-started">Get started</a>
+    </div>
+   <div class="col-md-6 text-center">
+  <div id="crmCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+    <div class="carousel-inner rounded-4 shadow">
+      <div class="carousel-item active">
+        <img src="{% static 'images/img1.png' %}" class="d-block w-100 hero-image" alt="CRM Card 1">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/img2.png' %}" class="d-block w-100 hero-image" alt="CRM Card 2">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/img3.png' %}" class="d-block w-100 hero-image" alt="CRM Card 3">
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<!-- Stats Section -->
+<div class="section bg-light">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-4">
+        <div class="stat-box">
+          <h2>10K+</h2>
+          <p>Leads Captured</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stat-box">
+          <h2>95%</h2>
+          <p>Conversion Rate</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stat-box">
+          <h2>150+</h2>
+          <p>Active Campaigns</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- About Section -->
+<div class="section bg-light">
+  <div class="container">
+    <h2 class="section-title">About Smart CRM</h2>
+    <p class="section-subtitle">
+      We are a modern customer relationship platform focused on automation, analytics, and ease of use. Our mission is to simplify lead generation, email campaigns, and performance tracking — so you can focus on growth.
+    </p>
+  </div>
+</div>
+
+<!-- Why Choose Us Section -->
+<div class="section">
+  <div class="container">
+    <h2 class="section-title">Why Choose Us</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="icon-box">
+          <i class="bi bi-lightning-charge-fill"></i>
+          <h5 class="fw-bold mt-3">Fast & Automated</h5>
+          <p>Automate campaigns, lead tracking, and engagement workflows effortlessly.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="icon-box">
+          <i class="bi bi-bar-chart-line-fill"></i>
+          <h5 class="fw-bold mt-3">Insightful Analytics</h5>
+          <p>Track performance metrics and optimize decision-making with real-time insights.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="icon-box">
+          <i class="bi bi-shield-check"></i>
+          <h5 class="fw-bold mt-3">Secure & Reliable</h5>
+          <p>Built on trusted technologies to keep your data safe, secure, and always available.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+{% endblock %}

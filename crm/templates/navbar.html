@@ -1,37 +1,40 @@
 {% load static %}
 <style>
   .navbar-custom {
-    background-color: #03045E;
-    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* drop shadow */
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
   }
 
   .navbar-custom .nav-link,
   .navbar-custom .navbar-brand {
-    color: white !important;
+    color: black !important;
   }
 
   .navbar-custom .nav-link:hover,
   .navbar-custom .nav-link:focus {
-    color: #90E0EF !important;
+    color: #333 !important;
   }
 
   .navbar-custom .btn-link.nav-link {
-    color: white !important;
+    color: black !important;
     text-decoration: none;
   }
 
   .navbar-custom .btn-link.nav-link:hover {
-    color: #90E0EF !important;
+    color: #333 !important;
   }
 
   .navbar-toggler-icon {
-    filter: invert(1);
+    filter: invert(0); /* default black icon for light background */
   }
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-custom">
-  <div class="container-fluid">
-    <a class="navbar-brand fw-semibold" href="{% url 'dashboard' %}">Smart CRM</a>
+  <div class="container-fluid px-4">
+
+    <a class="navbar-brand fw-semi-bold" href="{% url 'dashboard' %}">Smart CRM</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
