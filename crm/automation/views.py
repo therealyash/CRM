@@ -27,7 +27,7 @@ def automation_update(request, pk):
     form = AutomationForm(request.POST or None, instance=automation)
     if form.is_valid():
         form.save()
-        messages.info(request, "✏️ Campaign updated successfully!")
+        messages.info(request, "✏️ Automation updated successfully!")
         return redirect('automation_list')
     return render(request, 'automation/automation_form.html', {'form': form, 'title': 'Update Automation'})
 
@@ -35,6 +35,6 @@ def automation_delete(request, pk):
     automation = get_object_or_404(Automation, pk=pk)
     if request.method == 'POST':
         automation.delete()
-        messages.warning(request, "🗑️ Campaign deleted successfully!")
+        messages.warning(request, "🗑️ Automation deleted successfully!")
         return redirect('automation_list')
     return render(request, 'automation/automation_confirm_delete.html', {'automation': automation})

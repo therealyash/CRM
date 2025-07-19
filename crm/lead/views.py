@@ -25,7 +25,7 @@ def lead_update(request, pk):
     form = LeadForm(request.POST or None, instance=lead)
     if form.is_valid():
         form.save()
-        messages.info(request, "✏️ Campaign updated successfully!")
+        messages.info(request, "✏️ Lead updated successfully!")
         return redirect('lead_list')
     return render(request, 'lead/lead_form.html', {'form': form, 'title': 'Update Lead'})
 
@@ -33,6 +33,6 @@ def lead_delete(request, pk):
     lead = get_object_or_404(Lead, pk=pk)
     if request.method == 'POST':
         lead.delete()
-        messages.warning(request, "🗑️ Campaign deleted successfully!")
+        messages.warning(request, "🗑️ Lead deleted successfully!")
         return redirect('lead_list')
     return render(request, 'lead/lead_confirm_delete.html', {'lead': lead})
