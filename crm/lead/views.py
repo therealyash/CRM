@@ -10,7 +10,8 @@ from django.contrib import messages
 def lead_list(request):
     leads = Lead.objects.all().order_by('-created_at')
     return render(request, 'lead/lead_list.html', {'leads': leads})
-
+@never_cache
+@login_required
 def lead_create(request):
     form = LeadForm(request.POST or None)
     if form.is_valid():
@@ -19,7 +20,8 @@ def lead_create(request):
         return redirect('lead_list')
     return render(request, 'lead/lead_form.html', {'form': form, 'title': 'Create Lead'})
 
-
+@never_cache
+@login_required
 def lead_update(request, pk):
     lead = get_object_or_404(Lead, pk=pk)
     form = LeadForm(request.POST or None, instance=lead)
@@ -29,6 +31,8 @@ def lead_update(request, pk):
         return redirect('lead_list')
     return render(request, 'lead/lead_form.html', {'form': form, 'title': 'Update Lead'})
 
+@never_cache
+@login_required
 def lead_delete(request, pk):
     lead = get_object_or_404(Lead, pk=pk)
     if request.method == 'POST':
